@@ -1,0 +1,820 @@
+
+Actividad Experimental 1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000496  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000442  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000496  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000004c8  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  00000508  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008bd  00000000  00000000  00000540  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000070f  00000000  00000000  00000dfd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000526  00000000  00000000  0000150c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000070  00000000  00000000  00001a34  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000468  00000000  00000000  00001aa4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000055c  00000000  00000000  00001f0c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  00002468  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 97 00 	call	0x12e	; 0x12e <main>
+  78:	0c 94 1f 02 	jmp	0x43e	; 0x43e <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <inicializar_io>:
+	}
+}
+
+// Inicialización de los puertos de entrada/salida
+void inicializar_io() {
+	DDRB = 0xF1;  // PB0 como salida (motor), PB1, PB2, PB3 como entradas (botones)
+  80:	81 ef       	ldi	r24, 0xF1	; 241
+  82:	84 b9       	out	0x04, r24	; 4
+	DDRC = 0xFF;  // PC0 a PC4 como salidas (LEDs)
+  84:	8f ef       	ldi	r24, 0xFF	; 255
+  86:	87 b9       	out	0x07, r24	; 7
+	PORTB = 0x00; // Inicializar pines del motor y botones
+  88:	15 b8       	out	0x05, r1	; 5
+	PORTC = 0x00; // Inicializar LEDs
+  8a:	18 b8       	out	0x08, r1	; 8
+  8c:	08 95       	ret
+
+0000008e <apagar_leds>:
+	}
+}
+
+// Apagar todos los LEDs
+void apagar_leds() {
+	PORTC = 0x00;  // Apagar todos los LEDs
+  8e:	18 b8       	out	0x08, r1	; 8
+  90:	08 95       	ret
+
+00000092 <actualizar_leds>:
+	PORTB = 0x00; // Inicializar pines del motor y botones
+	PORTC = 0x00; // Inicializar LEDs
+}
+
+// Actualizar los LEDs según el tiempo seleccionado
+void actualizar_leds(int T) {
+  92:	cf 93       	push	r28
+  94:	df 93       	push	r29
+  96:	ec 01       	movw	r28, r24
+	apagar_leds();  // Apagar los LEDs antes de actualizar
+  98:	0e 94 47 00 	call	0x8e	; 0x8e <apagar_leds>
+	switch (T) {
+  9c:	c0 3d       	cpi	r28, 0xD0	; 208
+  9e:	87 e0       	ldi	r24, 0x07	; 7
+  a0:	d8 07       	cpc	r29, r24
+  a2:	e1 f0       	breq	.+56     	; 0xdc <actualizar_leds+0x4a>
+  a4:	44 f4       	brge	.+16     	; 0xb6 <actualizar_leds+0x24>
+  a6:	c4 3f       	cpi	r28, 0xF4	; 244
+  a8:	81 e0       	ldi	r24, 0x01	; 1
+  aa:	d8 07       	cpc	r29, r24
+  ac:	61 f0       	breq	.+24     	; 0xc6 <actualizar_leds+0x34>
+  ae:	c8 3e       	cpi	r28, 0xE8	; 232
+  b0:	d3 40       	sbci	r29, 0x03	; 3
+  b2:	69 f0       	breq	.+26     	; 0xce <actualizar_leds+0x3c>
+  b4:	39 c0       	rjmp	.+114    	; 0x128 <actualizar_leds+0x96>
+  b6:	c0 37       	cpi	r28, 0x70	; 112
+  b8:	87 e1       	ldi	r24, 0x17	; 23
+  ba:	d8 07       	cpc	r29, r24
+  bc:	c9 f0       	breq	.+50     	; 0xf0 <actualizar_leds+0x5e>
+  be:	c0 3e       	cpi	r28, 0xE0	; 224
+  c0:	de 42       	sbci	r29, 0x2E	; 46
+  c2:	19 f1       	breq	.+70     	; 0x10a <actualizar_leds+0x78>
+  c4:	31 c0       	rjmp	.+98     	; 0x128 <actualizar_leds+0x96>
+		case T1: sbi(PORTC, 0); break;
+  c6:	88 b1       	in	r24, 0x08	; 8
+  c8:	81 60       	ori	r24, 0x01	; 1
+  ca:	88 b9       	out	0x08, r24	; 8
+  cc:	2d c0       	rjmp	.+90     	; 0x128 <actualizar_leds+0x96>
+		case T2: sbi(PORTC, 0); sbi(PORTC, 1); break;
+  ce:	88 b1       	in	r24, 0x08	; 8
+  d0:	81 60       	ori	r24, 0x01	; 1
+  d2:	88 b9       	out	0x08, r24	; 8
+  d4:	88 b1       	in	r24, 0x08	; 8
+  d6:	82 60       	ori	r24, 0x02	; 2
+  d8:	88 b9       	out	0x08, r24	; 8
+  da:	26 c0       	rjmp	.+76     	; 0x128 <actualizar_leds+0x96>
+		case T3: sbi(PORTC, 0); sbi(PORTC, 1); sbi(PORTC, 2); break;
+  dc:	88 b1       	in	r24, 0x08	; 8
+  de:	81 60       	ori	r24, 0x01	; 1
+  e0:	88 b9       	out	0x08, r24	; 8
+  e2:	88 b1       	in	r24, 0x08	; 8
+  e4:	82 60       	ori	r24, 0x02	; 2
+  e6:	88 b9       	out	0x08, r24	; 8
+  e8:	88 b1       	in	r24, 0x08	; 8
+  ea:	84 60       	ori	r24, 0x04	; 4
+  ec:	88 b9       	out	0x08, r24	; 8
+  ee:	1c c0       	rjmp	.+56     	; 0x128 <actualizar_leds+0x96>
+		case T4: sbi(PORTC, 0); sbi(PORTC, 1); sbi(PORTC, 2); sbi(PORTC, 3); break;
+  f0:	88 b1       	in	r24, 0x08	; 8
+  f2:	81 60       	ori	r24, 0x01	; 1
+  f4:	88 b9       	out	0x08, r24	; 8
+  f6:	88 b1       	in	r24, 0x08	; 8
+  f8:	82 60       	ori	r24, 0x02	; 2
+  fa:	88 b9       	out	0x08, r24	; 8
+  fc:	88 b1       	in	r24, 0x08	; 8
+  fe:	84 60       	ori	r24, 0x04	; 4
+ 100:	88 b9       	out	0x08, r24	; 8
+ 102:	88 b1       	in	r24, 0x08	; 8
+ 104:	88 60       	ori	r24, 0x08	; 8
+ 106:	88 b9       	out	0x08, r24	; 8
+ 108:	0f c0       	rjmp	.+30     	; 0x128 <actualizar_leds+0x96>
+		case T5: sbi(PORTC, 0); sbi(PORTC, 1); sbi(PORTC, 2); sbi(PORTC, 3); sbi(PORTC, 4); break;
+ 10a:	88 b1       	in	r24, 0x08	; 8
+ 10c:	81 60       	ori	r24, 0x01	; 1
+ 10e:	88 b9       	out	0x08, r24	; 8
+ 110:	88 b1       	in	r24, 0x08	; 8
+ 112:	82 60       	ori	r24, 0x02	; 2
+ 114:	88 b9       	out	0x08, r24	; 8
+ 116:	88 b1       	in	r24, 0x08	; 8
+ 118:	84 60       	ori	r24, 0x04	; 4
+ 11a:	88 b9       	out	0x08, r24	; 8
+ 11c:	88 b1       	in	r24, 0x08	; 8
+ 11e:	88 60       	ori	r24, 0x08	; 8
+ 120:	88 b9       	out	0x08, r24	; 8
+ 122:	88 b1       	in	r24, 0x08	; 8
+ 124:	80 61       	ori	r24, 0x10	; 16
+ 126:	88 b9       	out	0x08, r24	; 8
+	}
+}
+ 128:	df 91       	pop	r29
+ 12a:	cf 91       	pop	r28
+ 12c:	08 95       	ret
+
+0000012e <main>:
+// Declaración de funciones
+void inicializar_io();
+void actualizar_leds(int T);
+void apagar_leds();
+
+int main(void) {
+ 12e:	cf 93       	push	r28
+ 130:	df 93       	push	r29
+ 132:	cd b7       	in	r28, 0x3d	; 61
+ 134:	de b7       	in	r29, 0x3e	; 62
+ 136:	28 97       	sbiw	r28, 0x08	; 8
+ 138:	0f b6       	in	r0, 0x3f	; 63
+ 13a:	f8 94       	cli
+ 13c:	de bf       	out	0x3e, r29	; 62
+ 13e:	0f be       	out	0x3f, r0	; 63
+ 140:	cd bf       	out	0x3d, r28	; 61
+	// Inicialización de los puertos de entrada/salida
+	inicializar_io();
+ 142:	0e 94 40 00 	call	0x80	; 0x80 <inicializar_io>
+	int motor_encendido = 0;      // Estado del motor
+
+	// Variables de estado de los botones
+	int B1_act, B1_ant = 1, flag_B1 = 1;
+	int B2_act, B2_ant = 1, flag_B2 = 1;
+	int B3_act, B3_ant = 1, flag_B3 = 1;
+ 146:	21 e0       	ldi	r18, 0x01	; 1
+ 148:	30 e0       	ldi	r19, 0x00	; 0
+ 14a:	3e 83       	std	Y+6, r19	; 0x06
+ 14c:	2d 83       	std	Y+5, r18	; 0x05
+ 14e:	ee 24       	eor	r14, r14
+ 150:	e3 94       	inc	r14
+ 152:	f1 2c       	mov	r15, r1
+	unsigned int temp = T;        // Tiempo actual seleccionado en unidades de 10 ms
+	int motor_encendido = 0;      // Estado del motor
+
+	// Variables de estado de los botones
+	int B1_act, B1_ant = 1, flag_B1 = 1;
+	int B2_act, B2_ant = 1, flag_B2 = 1;
+ 154:	81 e0       	ldi	r24, 0x01	; 1
+ 156:	90 e0       	ldi	r25, 0x00	; 0
+ 158:	9c 83       	std	Y+4, r25	; 0x04
+ 15a:	8b 83       	std	Y+3, r24	; 0x03
+ 15c:	01 e0       	ldi	r16, 0x01	; 1
+ 15e:	10 e0       	ldi	r17, 0x00	; 0
+	unsigned int T = T1;          // Tiempo seleccionado inicialmente
+	unsigned int temp = T;        // Tiempo actual seleccionado en unidades de 10 ms
+	int motor_encendido = 0;      // Estado del motor
+
+	// Variables de estado de los botones
+	int B1_act, B1_ant = 1, flag_B1 = 1;
+ 160:	3a 83       	std	Y+2, r19	; 0x02
+ 162:	29 83       	std	Y+1, r18	; 0x01
+ 164:	98 87       	std	Y+8, r25	; 0x08
+ 166:	8f 83       	std	Y+7, r24	; 0x07
+	// Inicialización de los puertos de entrada/salida
+	inicializar_io();
+	unsigned int cont = 0;        // Contador para el temporizador
+	unsigned int T = T1;          // Tiempo seleccionado inicialmente
+	unsigned int temp = T;        // Tiempo actual seleccionado en unidades de 10 ms
+	int motor_encendido = 0;      // Estado del motor
+ 168:	c1 2c       	mov	r12, r1
+ 16a:	d1 2c       	mov	r13, r1
+int main(void) {
+	// Inicialización de los puertos de entrada/salida
+	inicializar_io();
+	unsigned int cont = 0;        // Contador para el temporizador
+	unsigned int T = T1;          // Tiempo seleccionado inicialmente
+	unsigned int temp = T;        // Tiempo actual seleccionado en unidades de 10 ms
+ 16c:	0f 2e       	mov	r0, r31
+ 16e:	f4 ef       	ldi	r31, 0xF4	; 244
+ 170:	2f 2e       	mov	r2, r31
+ 172:	33 24       	eor	r3, r3
+ 174:	33 94       	inc	r3
+ 176:	f0 2d       	mov	r31, r0
+
+int main(void) {
+	// Inicialización de los puertos de entrada/salida
+	inicializar_io();
+	unsigned int cont = 0;        // Contador para el temporizador
+	unsigned int T = T1;          // Tiempo seleccionado inicialmente
+ 178:	0f 2e       	mov	r0, r31
+ 17a:	f4 ef       	ldi	r31, 0xF4	; 244
+ 17c:	4f 2e       	mov	r4, r31
+ 17e:	55 24       	eor	r5, r5
+ 180:	53 94       	inc	r5
+ 182:	f0 2d       	mov	r31, r0
+void apagar_leds();
+
+int main(void) {
+	// Inicialización de los puertos de entrada/salida
+	inicializar_io();
+	unsigned int cont = 0;        // Contador para el temporizador
+ 184:	a1 2c       	mov	r10, r1
+ 186:	b1 2c       	mov	r11, r1
+	int B2_act, B2_ant = 1, flag_B2 = 1;
+	int B3_act, B3_ant = 1, flag_B3 = 1;
+
+	while (1) {
+		
+		actualizar_leds(T);
+ 188:	c2 01       	movw	r24, r4
+ 18a:	0e 94 49 00 	call	0x92	; 0x92 <actualizar_leds>
+		// Manejo del botón de start/stop (PB1)
+		B1_act = es_alto(PINB, BOTON_START_STOP);
+ 18e:	83 b1       	in	r24, 0x03	; 3
+ 190:	82 70       	andi	r24, 0x02	; 2
+ 192:	90 e0       	ldi	r25, 0x00	; 0
+ 194:	21 e0       	ldi	r18, 0x01	; 1
+ 196:	00 97       	sbiw	r24, 0x00	; 0
+ 198:	09 f4       	brne	.+2      	; 0x19c <main+0x6e>
+ 19a:	20 e0       	ldi	r18, 0x00	; 0
+ 19c:	82 2e       	mov	r8, r18
+ 19e:	91 2c       	mov	r9, r1
+		if (B1_act && B1_ant)
+ 1a0:	00 97       	sbiw	r24, 0x00	; 0
+ 1a2:	41 f0       	breq	.+16     	; 0x1b4 <main+0x86>
+ 1a4:	2f 81       	ldd	r18, Y+7	; 0x07
+ 1a6:	38 85       	ldd	r19, Y+8	; 0x08
+ 1a8:	23 2b       	or	r18, r19
+ 1aa:	21 f0       	breq	.+8      	; 0x1b4 <main+0x86>
+		flag_B1 = 1;
+ 1ac:	21 e0       	ldi	r18, 0x01	; 1
+ 1ae:	30 e0       	ldi	r19, 0x00	; 0
+ 1b0:	3a 83       	std	Y+2, r19	; 0x02
+ 1b2:	29 83       	std	Y+1, r18	; 0x01
+		if (!B1_act && !B1_ant && flag_B1) {
+ 1b4:	89 2b       	or	r24, r25
+ 1b6:	a1 f5       	brne	.+104    	; 0x220 <main+0xf2>
+ 1b8:	8f 81       	ldd	r24, Y+7	; 0x07
+ 1ba:	98 85       	ldd	r25, Y+8	; 0x08
+ 1bc:	89 2b       	or	r24, r25
+ 1be:	81 f5       	brne	.+96     	; 0x220 <main+0xf2>
+ 1c0:	29 81       	ldd	r18, Y+1	; 0x01
+ 1c2:	3a 81       	ldd	r19, Y+2	; 0x02
+ 1c4:	23 2b       	or	r18, r19
+ 1c6:	61 f1       	breq	.+88     	; 0x220 <main+0xf2>
+			motor_encendido = !motor_encendido;
+ 1c8:	31 e0       	ldi	r19, 0x01	; 1
+ 1ca:	39 83       	std	Y+1, r19	; 0x01
+ 1cc:	c1 14       	cp	r12, r1
+ 1ce:	d1 04       	cpc	r13, r1
+ 1d0:	09 f0       	breq	.+2      	; 0x1d4 <main+0xa6>
+ 1d2:	19 82       	std	Y+1, r1	; 0x01
+ 1d4:	99 81       	ldd	r25, Y+1	; 0x01
+ 1d6:	89 2f       	mov	r24, r25
+ 1d8:	90 e0       	ldi	r25, 0x00	; 0
+ 1da:	9a 83       	std	Y+2, r25	; 0x02
+ 1dc:	89 83       	std	Y+1, r24	; 0x01
+			if (motor_encendido) {
+ 1de:	cd 28       	or	r12, r13
+ 1e0:	51 f4       	brne	.+20     	; 0x1f6 <main+0xc8>
+				sbi(PORTB, SAL_MOT);	// Encender el motor
+ 1e2:	85 b1       	in	r24, 0x05	; 5
+ 1e4:	81 60       	ori	r24, 0x01	; 1
+ 1e6:	85 b9       	out	0x05, r24	; 5
+		// Manejo del botón de start/stop (PB1)
+		B1_act = es_alto(PINB, BOTON_START_STOP);
+		if (B1_act && B1_ant)
+		flag_B1 = 1;
+		if (!B1_act && !B1_ant && flag_B1) {
+			motor_encendido = !motor_encendido;
+ 1e8:	c9 80       	ldd	r12, Y+1	; 0x01
+ 1ea:	da 80       	ldd	r13, Y+2	; 0x02
+				cbi(PORTB, SAL_MOT);	// Apagar el motor
+				apagar_leds();			// Apagar los LEDs cuando se apaga el motor
+				T = T1;                // Restablecer la temporización a T1
+				temp = T;              // Actualizar la variable temp también
+			}
+			flag_B1 = 0;
+ 1ec:	1a 82       	std	Y+2, r1	; 0x02
+ 1ee:	19 82       	std	Y+1, r1	; 0x01
+		flag_B1 = 1;
+		if (!B1_act && !B1_ant && flag_B1) {
+			motor_encendido = !motor_encendido;
+			if (motor_encendido) {
+				sbi(PORTB, SAL_MOT);	// Encender el motor
+				cont = 0;
+ 1f0:	a1 2c       	mov	r10, r1
+ 1f2:	b1 2c       	mov	r11, r1
+ 1f4:	15 c0       	rjmp	.+42     	; 0x220 <main+0xf2>
+				} else {
+				cbi(PORTB, SAL_MOT);	// Apagar el motor
+ 1f6:	85 b1       	in	r24, 0x05	; 5
+ 1f8:	8e 7f       	andi	r24, 0xFE	; 254
+ 1fa:	85 b9       	out	0x05, r24	; 5
+				apagar_leds();			// Apagar los LEDs cuando se apaga el motor
+ 1fc:	0e 94 47 00 	call	0x8e	; 0x8e <apagar_leds>
+		// Manejo del botón de start/stop (PB1)
+		B1_act = es_alto(PINB, BOTON_START_STOP);
+		if (B1_act && B1_ant)
+		flag_B1 = 1;
+		if (!B1_act && !B1_ant && flag_B1) {
+			motor_encendido = !motor_encendido;
+ 200:	c9 80       	ldd	r12, Y+1	; 0x01
+ 202:	da 80       	ldd	r13, Y+2	; 0x02
+				cbi(PORTB, SAL_MOT);	// Apagar el motor
+				apagar_leds();			// Apagar los LEDs cuando se apaga el motor
+				T = T1;                // Restablecer la temporización a T1
+				temp = T;              // Actualizar la variable temp también
+			}
+			flag_B1 = 0;
+ 204:	1a 82       	std	Y+2, r1	; 0x02
+ 206:	19 82       	std	Y+1, r1	; 0x01
+				cont = 0;
+				} else {
+				cbi(PORTB, SAL_MOT);	// Apagar el motor
+				apagar_leds();			// Apagar los LEDs cuando se apaga el motor
+				T = T1;                // Restablecer la temporización a T1
+				temp = T;              // Actualizar la variable temp también
+ 208:	0f 2e       	mov	r0, r31
+ 20a:	f4 ef       	ldi	r31, 0xF4	; 244
+ 20c:	2f 2e       	mov	r2, r31
+ 20e:	33 24       	eor	r3, r3
+ 210:	33 94       	inc	r3
+ 212:	f0 2d       	mov	r31, r0
+				sbi(PORTB, SAL_MOT);	// Encender el motor
+				cont = 0;
+				} else {
+				cbi(PORTB, SAL_MOT);	// Apagar el motor
+				apagar_leds();			// Apagar los LEDs cuando se apaga el motor
+				T = T1;                // Restablecer la temporización a T1
+ 214:	0f 2e       	mov	r0, r31
+ 216:	f4 ef       	ldi	r31, 0xF4	; 244
+ 218:	4f 2e       	mov	r4, r31
+ 21a:	55 24       	eor	r5, r5
+ 21c:	53 94       	inc	r5
+ 21e:	f0 2d       	mov	r31, r0
+			flag_B1 = 0;
+		}
+		B1_ant = B1_act;
+
+		// Manejo del botón de incremento de tiempo (PB2)
+		B2_act = es_alto(PINB, BOTON_INC);
+ 220:	93 b1       	in	r25, 0x03	; 3
+ 222:	21 e0       	ldi	r18, 0x01	; 1
+ 224:	89 2f       	mov	r24, r25
+ 226:	84 70       	andi	r24, 0x04	; 4
+ 228:	92 ff       	sbrs	r25, 2
+ 22a:	20 e0       	ldi	r18, 0x00	; 0
+ 22c:	62 2e       	mov	r6, r18
+ 22e:	71 2c       	mov	r7, r1
+		if (B2_act && B2_ant)
+ 230:	88 23       	and	r24, r24
+ 232:	39 f0       	breq	.+14     	; 0x242 <main+0x114>
+ 234:	01 15       	cp	r16, r1
+ 236:	11 05       	cpc	r17, r1
+ 238:	21 f0       	breq	.+8      	; 0x242 <main+0x114>
+		flag_B2 = 1;
+ 23a:	21 e0       	ldi	r18, 0x01	; 1
+ 23c:	30 e0       	ldi	r19, 0x00	; 0
+ 23e:	3c 83       	std	Y+4, r19	; 0x04
+ 240:	2b 83       	std	Y+3, r18	; 0x03
+		if (!B2_act && !B2_ant && flag_B2) {
+ 242:	81 11       	cpse	r24, r1
+ 244:	45 c0       	rjmp	.+138    	; 0x2d0 <main+0x1a2>
+ 246:	01 2b       	or	r16, r17
+ 248:	09 f0       	breq	.+2      	; 0x24c <main+0x11e>
+ 24a:	42 c0       	rjmp	.+132    	; 0x2d0 <main+0x1a2>
+ 24c:	8b 81       	ldd	r24, Y+3	; 0x03
+ 24e:	9c 81       	ldd	r25, Y+4	; 0x04
+ 250:	89 2b       	or	r24, r25
+ 252:	f1 f1       	breq	.+124    	; 0x2d0 <main+0x1a2>
+			if (!motor_encendido && T < T5) {
+ 254:	c1 14       	cp	r12, r1
+ 256:	d1 04       	cpc	r13, r1
+ 258:	b1 f5       	brne	.+108    	; 0x2c6 <main+0x198>
+ 25a:	90 ee       	ldi	r25, 0xE0	; 224
+ 25c:	49 16       	cp	r4, r25
+ 25e:	9e e2       	ldi	r25, 0x2E	; 46
+ 260:	59 06       	cpc	r5, r25
+ 262:	a0 f5       	brcc	.+104    	; 0x2cc <main+0x19e>
+				T = (T == T1) ? T2 : (T == T2) ? T3 : (T == T3) ? T4 : T5;
+ 264:	24 ef       	ldi	r18, 0xF4	; 244
+ 266:	42 16       	cp	r4, r18
+ 268:	21 e0       	ldi	r18, 0x01	; 1
+ 26a:	52 06       	cpc	r5, r18
+ 26c:	89 f0       	breq	.+34     	; 0x290 <main+0x162>
+ 26e:	38 ee       	ldi	r19, 0xE8	; 232
+ 270:	43 16       	cp	r4, r19
+ 272:	33 e0       	ldi	r19, 0x03	; 3
+ 274:	53 06       	cpc	r5, r19
+ 276:	99 f0       	breq	.+38     	; 0x29e <main+0x170>
+ 278:	80 ed       	ldi	r24, 0xD0	; 208
+ 27a:	48 16       	cp	r4, r24
+ 27c:	87 e0       	ldi	r24, 0x07	; 7
+ 27e:	58 06       	cpc	r5, r24
+ 280:	a9 f4       	brne	.+42     	; 0x2ac <main+0x17e>
+ 282:	0f 2e       	mov	r0, r31
+ 284:	f0 e7       	ldi	r31, 0x70	; 112
+ 286:	4f 2e       	mov	r4, r31
+ 288:	f7 e1       	ldi	r31, 0x17	; 23
+ 28a:	5f 2e       	mov	r5, r31
+ 28c:	f0 2d       	mov	r31, r0
+ 28e:	14 c0       	rjmp	.+40     	; 0x2b8 <main+0x18a>
+ 290:	0f 2e       	mov	r0, r31
+ 292:	f8 ee       	ldi	r31, 0xE8	; 232
+ 294:	4f 2e       	mov	r4, r31
+ 296:	f3 e0       	ldi	r31, 0x03	; 3
+ 298:	5f 2e       	mov	r5, r31
+ 29a:	f0 2d       	mov	r31, r0
+ 29c:	0d c0       	rjmp	.+26     	; 0x2b8 <main+0x18a>
+ 29e:	0f 2e       	mov	r0, r31
+ 2a0:	f0 ed       	ldi	r31, 0xD0	; 208
+ 2a2:	4f 2e       	mov	r4, r31
+ 2a4:	f7 e0       	ldi	r31, 0x07	; 7
+ 2a6:	5f 2e       	mov	r5, r31
+ 2a8:	f0 2d       	mov	r31, r0
+ 2aa:	06 c0       	rjmp	.+12     	; 0x2b8 <main+0x18a>
+ 2ac:	0f 2e       	mov	r0, r31
+ 2ae:	f0 ee       	ldi	r31, 0xE0	; 224
+ 2b0:	4f 2e       	mov	r4, r31
+ 2b2:	fe e2       	ldi	r31, 0x2E	; 46
+ 2b4:	5f 2e       	mov	r5, r31
+ 2b6:	f0 2d       	mov	r31, r0
+				temp = T;
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+ 2b8:	c2 01       	movw	r24, r4
+ 2ba:	0e 94 49 00 	call	0x92	; 0x92 <actualizar_leds>
+		if (B2_act && B2_ant)
+		flag_B2 = 1;
+		if (!B2_act && !B2_ant && flag_B2) {
+			if (!motor_encendido && T < T5) {
+				T = (T == T1) ? T2 : (T == T2) ? T3 : (T == T3) ? T4 : T5;
+				temp = T;
+ 2be:	12 01       	movw	r2, r4
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+			}
+			flag_B2 = 0;
+ 2c0:	1c 82       	std	Y+4, r1	; 0x04
+ 2c2:	1b 82       	std	Y+3, r1	; 0x03
+ 2c4:	05 c0       	rjmp	.+10     	; 0x2d0 <main+0x1a2>
+ 2c6:	1c 82       	std	Y+4, r1	; 0x04
+ 2c8:	1b 82       	std	Y+3, r1	; 0x03
+ 2ca:	02 c0       	rjmp	.+4      	; 0x2d0 <main+0x1a2>
+ 2cc:	1c 82       	std	Y+4, r1	; 0x04
+ 2ce:	1b 82       	std	Y+3, r1	; 0x03
+		}
+		B2_ant = B2_act;
+
+		// Manejo del botón de decremento de tiempo (PB3)
+		B3_act = es_alto(PINB, BOTON_DEC);
+ 2d0:	93 b1       	in	r25, 0x03	; 3
+ 2d2:	01 e0       	ldi	r16, 0x01	; 1
+ 2d4:	89 2f       	mov	r24, r25
+ 2d6:	88 70       	andi	r24, 0x08	; 8
+ 2d8:	93 ff       	sbrs	r25, 3
+ 2da:	00 e0       	ldi	r16, 0x00	; 0
+ 2dc:	10 e0       	ldi	r17, 0x00	; 0
+		if (B3_act && B3_ant)
+ 2de:	88 23       	and	r24, r24
+ 2e0:	39 f0       	breq	.+14     	; 0x2f0 <main+0x1c2>
+ 2e2:	e1 14       	cp	r14, r1
+ 2e4:	f1 04       	cpc	r15, r1
+ 2e6:	21 f0       	breq	.+8      	; 0x2f0 <main+0x1c2>
+		flag_B3 = 1;
+ 2e8:	21 e0       	ldi	r18, 0x01	; 1
+ 2ea:	30 e0       	ldi	r19, 0x00	; 0
+ 2ec:	3e 83       	std	Y+6, r19	; 0x06
+ 2ee:	2d 83       	std	Y+5, r18	; 0x05
+		if (!B3_act && !B3_ant && flag_B3) {
+ 2f0:	81 11       	cpse	r24, r1
+ 2f2:	45 c0       	rjmp	.+138    	; 0x37e <main+0x250>
+ 2f4:	ef 28       	or	r14, r15
+ 2f6:	09 f0       	breq	.+2      	; 0x2fa <main+0x1cc>
+ 2f8:	42 c0       	rjmp	.+132    	; 0x37e <main+0x250>
+ 2fa:	8d 81       	ldd	r24, Y+5	; 0x05
+ 2fc:	9e 81       	ldd	r25, Y+6	; 0x06
+ 2fe:	89 2b       	or	r24, r25
+ 300:	f1 f1       	breq	.+124    	; 0x37e <main+0x250>
+			if (!motor_encendido && T > T1) {
+ 302:	c1 14       	cp	r12, r1
+ 304:	d1 04       	cpc	r13, r1
+ 306:	b1 f5       	brne	.+108    	; 0x374 <main+0x246>
+ 308:	95 ef       	ldi	r25, 0xF5	; 245
+ 30a:	49 16       	cp	r4, r25
+ 30c:	91 e0       	ldi	r25, 0x01	; 1
+ 30e:	59 06       	cpc	r5, r25
+ 310:	a0 f1       	brcs	.+104    	; 0x37a <main+0x24c>
+				T = (T == T5) ? T4 : (T == T4) ? T3 : (T == T3) ? T2 : T1;
+ 312:	20 ee       	ldi	r18, 0xE0	; 224
+ 314:	42 16       	cp	r4, r18
+ 316:	2e e2       	ldi	r18, 0x2E	; 46
+ 318:	52 06       	cpc	r5, r18
+ 31a:	89 f0       	breq	.+34     	; 0x33e <main+0x210>
+ 31c:	30 e7       	ldi	r19, 0x70	; 112
+ 31e:	43 16       	cp	r4, r19
+ 320:	37 e1       	ldi	r19, 0x17	; 23
+ 322:	53 06       	cpc	r5, r19
+ 324:	99 f0       	breq	.+38     	; 0x34c <main+0x21e>
+ 326:	80 ed       	ldi	r24, 0xD0	; 208
+ 328:	48 16       	cp	r4, r24
+ 32a:	87 e0       	ldi	r24, 0x07	; 7
+ 32c:	58 06       	cpc	r5, r24
+ 32e:	a9 f4       	brne	.+42     	; 0x35a <main+0x22c>
+ 330:	0f 2e       	mov	r0, r31
+ 332:	f8 ee       	ldi	r31, 0xE8	; 232
+ 334:	4f 2e       	mov	r4, r31
+ 336:	f3 e0       	ldi	r31, 0x03	; 3
+ 338:	5f 2e       	mov	r5, r31
+ 33a:	f0 2d       	mov	r31, r0
+ 33c:	14 c0       	rjmp	.+40     	; 0x366 <main+0x238>
+ 33e:	0f 2e       	mov	r0, r31
+ 340:	f0 e7       	ldi	r31, 0x70	; 112
+ 342:	4f 2e       	mov	r4, r31
+ 344:	f7 e1       	ldi	r31, 0x17	; 23
+ 346:	5f 2e       	mov	r5, r31
+ 348:	f0 2d       	mov	r31, r0
+ 34a:	0d c0       	rjmp	.+26     	; 0x366 <main+0x238>
+ 34c:	0f 2e       	mov	r0, r31
+ 34e:	f0 ed       	ldi	r31, 0xD0	; 208
+ 350:	4f 2e       	mov	r4, r31
+ 352:	f7 e0       	ldi	r31, 0x07	; 7
+ 354:	5f 2e       	mov	r5, r31
+ 356:	f0 2d       	mov	r31, r0
+ 358:	06 c0       	rjmp	.+12     	; 0x366 <main+0x238>
+ 35a:	0f 2e       	mov	r0, r31
+ 35c:	f4 ef       	ldi	r31, 0xF4	; 244
+ 35e:	4f 2e       	mov	r4, r31
+ 360:	55 24       	eor	r5, r5
+ 362:	53 94       	inc	r5
+ 364:	f0 2d       	mov	r31, r0
+				temp = T;
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+ 366:	c2 01       	movw	r24, r4
+ 368:	0e 94 49 00 	call	0x92	; 0x92 <actualizar_leds>
+		if (B3_act && B3_ant)
+		flag_B3 = 1;
+		if (!B3_act && !B3_ant && flag_B3) {
+			if (!motor_encendido && T > T1) {
+				T = (T == T5) ? T4 : (T == T4) ? T3 : (T == T3) ? T2 : T1;
+				temp = T;
+ 36c:	12 01       	movw	r2, r4
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+			}
+			flag_B3 = 0;
+ 36e:	1e 82       	std	Y+6, r1	; 0x06
+ 370:	1d 82       	std	Y+5, r1	; 0x05
+ 372:	05 c0       	rjmp	.+10     	; 0x37e <main+0x250>
+ 374:	1e 82       	std	Y+6, r1	; 0x06
+ 376:	1d 82       	std	Y+5, r1	; 0x05
+ 378:	02 c0       	rjmp	.+4      	; 0x37e <main+0x250>
+ 37a:	1e 82       	std	Y+6, r1	; 0x06
+ 37c:	1d 82       	std	Y+5, r1	; 0x05
+		}
+		B3_ant = B3_act;
+
+		if (motor_encendido) {
+ 37e:	c1 14       	cp	r12, r1
+ 380:	d1 04       	cpc	r13, r1
+ 382:	09 f4       	brne	.+2      	; 0x386 <main+0x258>
+ 384:	51 c0       	rjmp	.+162    	; 0x428 <__EEPROM_REGION_LENGTH__+0x28>
+			if (cont >= temp) {
+ 386:	a2 14       	cp	r10, r2
+ 388:	b3 04       	cpc	r11, r3
+ 38a:	a0 f0       	brcs	.+40     	; 0x3b4 <main+0x286>
+				motor_encendido = 0;
+				cbi(PORTB, SAL_MOT);  // Apagar el motor cuando termina el tiempo
+ 38c:	85 b1       	in	r24, 0x05	; 5
+ 38e:	8e 7f       	andi	r24, 0xFE	; 254
+ 390:	85 b9       	out	0x05, r24	; 5
+				apagar_leds();         // Apagar todos los LEDs
+ 392:	0e 94 47 00 	call	0x8e	; 0x8e <apagar_leds>
+		}
+		B3_ant = B3_act;
+
+		if (motor_encendido) {
+			if (cont >= temp) {
+				motor_encendido = 0;
+ 396:	c1 2c       	mov	r12, r1
+ 398:	d1 2c       	mov	r13, r1
+				cbi(PORTB, SAL_MOT);  // Apagar el motor cuando termina el tiempo
+				apagar_leds();         // Apagar todos los LEDs
+				T = T1;                // Restablecer la temporización a T1
+				temp = T;              // Actualizar la variable temp también
+ 39a:	0f 2e       	mov	r0, r31
+ 39c:	f4 ef       	ldi	r31, 0xF4	; 244
+ 39e:	2f 2e       	mov	r2, r31
+ 3a0:	33 24       	eor	r3, r3
+ 3a2:	33 94       	inc	r3
+ 3a4:	f0 2d       	mov	r31, r0
+		if (motor_encendido) {
+			if (cont >= temp) {
+				motor_encendido = 0;
+				cbi(PORTB, SAL_MOT);  // Apagar el motor cuando termina el tiempo
+				apagar_leds();         // Apagar todos los LEDs
+				T = T1;                // Restablecer la temporización a T1
+ 3a6:	0f 2e       	mov	r0, r31
+ 3a8:	f4 ef       	ldi	r31, 0xF4	; 244
+ 3aa:	4f 2e       	mov	r4, r31
+ 3ac:	55 24       	eor	r5, r5
+ 3ae:	53 94       	inc	r5
+ 3b0:	f0 2d       	mov	r31, r0
+ 3b2:	3a c0       	rjmp	.+116    	; 0x428 <__EEPROM_REGION_LENGTH__+0x28>
+				temp = T;              // Actualizar la variable temp también
+				} else {
+				cont++;  // Incrementa el contador de tiempo en 10 ms
+ 3b4:	9f ef       	ldi	r25, 0xFF	; 255
+ 3b6:	a9 1a       	sub	r10, r25
+ 3b8:	b9 0a       	sbc	r11, r25
+
+				// Determina el valor de tiempo_restante para los LEDs
+				unsigned int tiempo_restante = temp - cont;
+ 3ba:	c1 01       	movw	r24, r2
+ 3bc:	8a 19       	sub	r24, r10
+ 3be:	9b 09       	sbc	r25, r11
+
+				if (tiempo_restante > 6000) {
+ 3c0:	81 37       	cpi	r24, 0x71	; 113
+ 3c2:	27 e1       	ldi	r18, 0x17	; 23
+ 3c4:	92 07       	cpc	r25, r18
+ 3c6:	90 f4       	brcc	.+36     	; 0x3ec <main+0x2be>
+					T = T5;  // Entre 1 y 2 minutos, todos los LEDs encendidos
+					} else if (tiempo_restante > 2000) {
+ 3c8:	81 3d       	cpi	r24, 0xD1	; 209
+ 3ca:	37 e0       	ldi	r19, 0x07	; 7
+ 3cc:	93 07       	cpc	r25, r19
+ 3ce:	a8 f4       	brcc	.+42     	; 0x3fa <main+0x2cc>
+					T = T4;  // Entre 20 segundos y 1 minuto, LEDs T1 a T4 encendidos
+					} else if (tiempo_restante > 1000) {
+ 3d0:	89 3e       	cpi	r24, 0xE9	; 233
+ 3d2:	23 e0       	ldi	r18, 0x03	; 3
+ 3d4:	92 07       	cpc	r25, r18
+ 3d6:	c0 f4       	brcc	.+48     	; 0x408 <__EEPROM_REGION_LENGTH__+0x8>
+					T = T3;  // Entre 10 y 20 segundos, LEDs T1 a T3 encendidos
+					} else if (tiempo_restante > 500) {
+ 3d8:	85 3f       	cpi	r24, 0xF5	; 245
+ 3da:	91 40       	sbci	r25, 0x01	; 1
+ 3dc:	e0 f0       	brcs	.+56     	; 0x416 <__EEPROM_REGION_LENGTH__+0x16>
+					T = T2;  // Entre 5 y 10 segundos, LEDs T1 a T2 encendidos
+ 3de:	0f 2e       	mov	r0, r31
+ 3e0:	f8 ee       	ldi	r31, 0xE8	; 232
+ 3e2:	4f 2e       	mov	r4, r31
+ 3e4:	f3 e0       	ldi	r31, 0x03	; 3
+ 3e6:	5f 2e       	mov	r5, r31
+ 3e8:	f0 2d       	mov	r31, r0
+ 3ea:	1b c0       	rjmp	.+54     	; 0x422 <__EEPROM_REGION_LENGTH__+0x22>
+
+				// Determina el valor de tiempo_restante para los LEDs
+				unsigned int tiempo_restante = temp - cont;
+
+				if (tiempo_restante > 6000) {
+					T = T5;  // Entre 1 y 2 minutos, todos los LEDs encendidos
+ 3ec:	0f 2e       	mov	r0, r31
+ 3ee:	f0 ee       	ldi	r31, 0xE0	; 224
+ 3f0:	4f 2e       	mov	r4, r31
+ 3f2:	fe e2       	ldi	r31, 0x2E	; 46
+ 3f4:	5f 2e       	mov	r5, r31
+ 3f6:	f0 2d       	mov	r31, r0
+ 3f8:	14 c0       	rjmp	.+40     	; 0x422 <__EEPROM_REGION_LENGTH__+0x22>
+					} else if (tiempo_restante > 2000) {
+					T = T4;  // Entre 20 segundos y 1 minuto, LEDs T1 a T4 encendidos
+ 3fa:	0f 2e       	mov	r0, r31
+ 3fc:	f0 e7       	ldi	r31, 0x70	; 112
+ 3fe:	4f 2e       	mov	r4, r31
+ 400:	f7 e1       	ldi	r31, 0x17	; 23
+ 402:	5f 2e       	mov	r5, r31
+ 404:	f0 2d       	mov	r31, r0
+ 406:	0d c0       	rjmp	.+26     	; 0x422 <__EEPROM_REGION_LENGTH__+0x22>
+					} else if (tiempo_restante > 1000) {
+					T = T3;  // Entre 10 y 20 segundos, LEDs T1 a T3 encendidos
+ 408:	0f 2e       	mov	r0, r31
+ 40a:	f0 ed       	ldi	r31, 0xD0	; 208
+ 40c:	4f 2e       	mov	r4, r31
+ 40e:	f7 e0       	ldi	r31, 0x07	; 7
+ 410:	5f 2e       	mov	r5, r31
+ 412:	f0 2d       	mov	r31, r0
+ 414:	06 c0       	rjmp	.+12     	; 0x422 <__EEPROM_REGION_LENGTH__+0x22>
+					} else if (tiempo_restante > 500) {
+					T = T2;  // Entre 5 y 10 segundos, LEDs T1 a T2 encendidos
+					} else {
+					T = T1;  // Entre 0 y 5 segundos, solo LED T1 encendido
+ 416:	0f 2e       	mov	r0, r31
+ 418:	f4 ef       	ldi	r31, 0xF4	; 244
+ 41a:	4f 2e       	mov	r4, r31
+ 41c:	55 24       	eor	r5, r5
+ 41e:	53 94       	inc	r5
+ 420:	f0 2d       	mov	r31, r0
+				}
+
+				// Reutiliza la función actualizar_leds para encender los LEDs según T
+				actualizar_leds(T);
+ 422:	c2 01       	movw	r24, r4
+ 424:	0e 94 49 00 	call	0x92	; 0x92 <actualizar_leds>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 428:	8f e3       	ldi	r24, 0x3F	; 63
+ 42a:	9c e9       	ldi	r25, 0x9C	; 156
+ 42c:	01 97       	sbiw	r24, 0x01	; 1
+ 42e:	f1 f7       	brne	.-4      	; 0x42c <__EEPROM_REGION_LENGTH__+0x2c>
+ 430:	00 c0       	rjmp	.+0      	; 0x432 <__EEPROM_REGION_LENGTH__+0x32>
+ 432:	00 00       	nop
+				T = T1;                // Restablecer la temporización a T1
+				temp = T;              // Actualizar la variable temp también
+			}
+			flag_B1 = 0;
+		}
+		B1_ant = B1_act;
+ 434:	98 86       	std	Y+8, r9	; 0x08
+ 436:	8f 82       	std	Y+7, r8	; 0x07
+				temp = T;
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+			}
+			flag_B3 = 0;
+		}
+		B3_ant = B3_act;
+ 438:	78 01       	movw	r14, r16
+				temp = T;
+				actualizar_leds(T);  // Actualizar los LEDs con el nuevo tiempo seleccionado
+			}
+			flag_B2 = 0;
+		}
+		B2_ant = B2_act;
+ 43a:	83 01       	movw	r16, r6
+ 43c:	a5 ce       	rjmp	.-694    	; 0x188 <main+0x5a>
+
+0000043e <_exit>:
+ 43e:	f8 94       	cli
+
+00000440 <__stop_program>:
+ 440:	ff cf       	rjmp	.-2      	; 0x440 <__stop_program>
